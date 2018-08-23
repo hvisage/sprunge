@@ -12,7 +12,8 @@ from google.appengine.api.app_identity import get_default_gcs_bucket_name
 from google.appengine.ext import blobstore, db
 from google.appengine.ext.webapp import blobstore_handlers
 
-URL = 'http://sprunge.us'
+#URL = 'http://sprunge.us'
+#URL = 'http://sprunge.us'
 POST = 'sprunge'
 
 def new_id():
@@ -23,7 +24,7 @@ def new_id():
         nid = nid + symbols[n:n + 1]
     return nid
 
-def help():
+def help(URL):
     form = (
         'data:text/html,<form action="{0}" method="POST" accept-charset="UTF-8">'
         '<textarea name="{1}" cols="80" rows="24"></textarea>'
@@ -72,15 +73,17 @@ class Sprunge(db.Model):
 class MainHandler(webapp2.RequestHandler):
 
     def get(self):
+        URL=self.request.application_url
         self.response.out.write('''
         <html>
         <body>
         {0}
         </body>
         </html>
-        '''.format(help()))
+        '''.format(help(URL)))
 
     def post(self):
+        URL=self.request.application_url
         nid = new_id()
         while Sprunge.gql('WHERE name = :1', nid).get():
             nid = new_id()

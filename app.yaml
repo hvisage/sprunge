@@ -1,8 +1,14 @@
-application: sprunge-hrd
-version: 2
+#application: sprunge-hrd
+#version: 2
 runtime: python27
 api_version: 1
 threadsafe: true
+
+libraries:
+- name: webapp2
+  version: latest
+  #- name: pygments
+  #version: latest
 
 handlers:
 - url: /favicon.ico
